@@ -20,3 +20,7 @@ http://localhost:8100/limits
 
 
 amqp
+
+====Latest Working Urls -=====
+http://localhost:8100/limits
+http://localhost:8100/currency-converter-feign/from/EUR/to/INR/quantity/10000
