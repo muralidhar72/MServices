@@ -5,7 +5,7 @@
 
 	<groupId>com.in28minutes.microservices</groupId>
 	<artifactId>spring-cloud-config-server</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>spring_cloud_server</version>
 	<packaging>jar</packaging>
 
 	<name>spring-cloud-config-server</name>

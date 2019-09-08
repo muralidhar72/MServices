@@ -1,0 +1,21 @@
+version: '3.3'
+
+services:
+  netflix-eureka-naming-server:
+    image: pmr2791/pmr2798791:netflix-eureka-naming-server
+    ports:
+      - "8761:8761"
+    deploy:
+      replicas: 0
+      restart_policy:
+        condition: on-failure
+  spring_cloud_server:
+    image: pmr2791/pmr2798791:spring_cloud_server
+    ports:
+      - "8888:8888"
+    environment:
+      - REGISTRY_HOST=netflix-eureka-naming-server
+    deploy:
+      replicas: 0
+      restart_policy:
+        condition: on-failure
