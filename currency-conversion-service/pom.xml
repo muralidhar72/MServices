@@ -5,7 +5,7 @@
 
 	<groupId>com.in28minutes.microservices</groupId>
 	<artifactId>currency-conversion-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>currency-conversion-service</version>
 	<packaging>jar</packaging>
 
 	<name>currency-conversion-service</name>
@@ -23,6 +23,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Finchley.M8</spring-cloud.version>
+		<docker.image.prefix>murali</docker.image.prefix>
 	</properties>
 
 	<dependencies>
@@ -83,6 +84,33 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.2</version>
+				<executions>
+					<execution>
+						<id>default</id>
+						<goals>
+							<goal>build</goal>
+							<goal>tag</goal>
+							<goal>push</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<dockerConfigFile></dockerConfigFile>
+					<useProxy>false</useProxy>
+					<repository>${docker.image.prefix}/${project.artifactId}</repository>
+					<tag>${version}</tag>
+					<buildArgs>
+						<JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+					</buildArgs>
+				</configuration>
+			</plugin>
+
+
 		</plugins>
 	</build>
 
