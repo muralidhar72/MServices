@@ -19,3 +19,15 @@ services:
       replicas: 0
       restart_policy:
         condition: on-failure
+  limits-server:
+    image: pmr2791/pmr2798791:limits-server
+    ports:
+      - "8889:8889"
+    environment:
+      - CLOUD_HOST=spring_cloud_server
+      - REGISTRY_HOST=netflix-eureka-naming-server
+    deploy:
+      replicas: 0
+      restart_policy:
+        condition: on-failure
+        
