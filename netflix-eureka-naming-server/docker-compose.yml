@@ -1,17 +1,36 @@
 version: '3.3'
 
-networks:
-  ms-net:
-    external: false
-
 services:
   Eurekha:
-    image: pmr2791/pmr27918791:Eurekha
+    image: pmr2791/pmr2798791:namingserver
+    container_name: eurekha
     networks:
-      - ms-net
+      - microservice-network
+    environment:
+      - SERVER_PORT=8761
+      - SPRING_APPLICATION_NAME=netflix-eureka-naming-server
     ports:
       - "8761:8761"
     deploy:
       replicas: 1
+      restart_policy:c
+        condition: on-failure
+  ConfigServer:
+    image: pmr2791/pmr2798791:cloud_config
+    networks:
+      - microservice-network
+    environment:
+      - SERVER_PORT=8888
+      - SPRING_APPLICATION_NAME=spring-cloud-config-server
+      - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/muralidhar72/:config.git
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULT-ZONE=http://localhost:8761/eureka
+    ports:
+      - "8888:8888"
+    deploy:
+      replicas: 1
       restart_policy:
         condition: on-failure
+networks:
+  microservice-network:
+    driver: overlay
+    attachable: true

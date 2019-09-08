@@ -24,3 +24,10 @@ amqp
 ====Latest Working Urls -=====
 http://localhost:8100/limits
 http://localhost:8100/currency-converter-feign/from/EUR/to/INR/quantity/10000
+http://localhost:8761/
+
+docker tag local-image:tagname reponame:tagname
+docker push reponame:tagname
+
+docker tag local-image:tagname pmr2791/pmr2798791:<TAG NAME>
+docker push  pmr2791/pmr2798791:<TAG NAME>
