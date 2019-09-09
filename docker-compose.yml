@@ -52,6 +52,10 @@ services:
     environment:
       - REGISTRY_HOST=netflix-eureka-naming-server
       - SERVER_PORT=8100
+      - FEIGN_CLIENT_CONFIG_DEFAULT_CONNECTTIMEOUT=160000000
+      - FEIGN_CLIENT_CONFIG_DEFAULT_READTIMEOUT=160000000
+      - RIBBON_READTIMEOUT=160000000
+      - RIBBON_CONNECTTIMEOUT=160000000
     deploy:
       replicas: 0
       restart_policy:
