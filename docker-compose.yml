@@ -15,6 +15,8 @@ services:
     image: pmr2791/pmr2798791:spring_cloud_server
     ports:
       - "8888:8888"
+    depends_on:
+      - netflix-eureka-naming-server 
     environment:
       - REGISTRY_HOST=netflix-eureka-naming-server
       - SERVER_PORT=8888
@@ -22,47 +24,58 @@ services:
       - FEIGN_CLIENT_CONFIG_DEFAULT_READTIMEOUT=160000000
       - RIBBON_READTIMEOUT=160000000
       - RIBBON_CONNECTTIMEOUT=160000000
+      - EUREKA_INSTANCE_PREFER-IP-ADDRESS=true
+      - EUREKA_CLIENT_FETCHREGISTRY=true
     deploy:
-      replicas: 0
+      replicas: 1
       restart_policy:
         condition: on-failure
   limits-server:
     image: pmr2791/pmr2798791:limits-server
     ports:
       - "8889:8889"
+    depends_on:
+      - netflix-eureka-naming-server 
     environment:
       - CLOUD_HOST=spring_cloud_server
       - REGISTRY_HOST=netflix-eureka-naming-server
       - SERVER_PORT=8889
-      - EUREKA.CLIENT.FETCHREGISTRY=true
       - FEIGN_CLIENT_CONFIG_DEFAULT_CONNECTTIMEOUT=160000000
       - FEIGN_CLIENT_CONFIG_DEFAULT_READTIMEOUT=160000000
       - RIBBON_READTIMEOUT=160000000
       - RIBBON_CONNECTTIMEOUT=160000000
+      - EUREKA_INSTANCE_PREFER-IP-ADDRESS=true
+      - EUREKA_CLIENT_FETCHREGISTRY=true
+      
     deploy:
-      replicas: 0
+      replicas: 1
       restart_policy:
         condition: on-failure
   netflix-zuul-api-gateway-server:
     image: pmr2791/pmr2798791:netflix-zuul-api-gateway-server
     ports:
       - "8765:8765"
+    depends_on:
+      - netflix-eureka-naming-server 
     environment:
       - REGISTRY_HOST=netflix-eureka-naming-server
       - SERVER_PORT=8765
-      - EUREKA.CLIENT.FETCHREGISTRY=true
       - FEIGN_CLIENT_CONFIG_DEFAULT_CONNECTTIMEOUT=160000000
       - FEIGN_CLIENT_CONFIG_DEFAULT_READTIMEOUT=160000000
       - RIBBON_READTIMEOUT=160000000
       - RIBBON_CONNECTTIMEOUT=160000000
+      - EUREKA_INSTANCE_PREFER-IP-ADDRESS=true
+      - EUREKA_CLIENT_FETCHREGISTRY=true
     deploy:
-      replicas: 0
+      replicas: 1
       restart_policy:
         condition: on-failure
   currency-conversion-service:
     image: pmr2791/pmr2798791:currency-conversion-service
     ports:
       - "8100:8100"
+    depends_on:
+      - netflix-eureka-naming-server 
     environment:
       - REGISTRY_HOST=netflix-eureka-naming-server
       - SERVER_PORT=8100
@@ -70,25 +83,30 @@ services:
       - FEIGN_CLIENT_CONFIG_DEFAULT_READTIMEOUT=160000000
       - RIBBON_READTIMEOUT=160000000
       - RIBBON_CONNECTTIMEOUT=160000000
-      - EUREKA.CLIENT.FETCHREGISTRY=true
+      - EUREKA_INSTANCE_PREFER-IP-ADDRESS=true
+      - EUREKA_CLIENT_FETCHREGISTRY=true
     deploy:
-      replicas: 0
+      replicas: 1
       restart_policy:
         condition: on-failure
+        
   currency-exchange-service:
     image: pmr2791/pmr2798791:currency-exchange-service
     ports:
       - "8001:8001"
+    depends_on:
+      - netflix-eureka-naming-server 
     environment:
       - REGISTRY_HOST=netflix-eureka-naming-server
       - SERVER_PORT=8001
-      - EUREKA.CLIENT.FETCHREGISTRY=true
       - FEIGN_CLIENT_CONFIG_DEFAULT_CONNECTTIMEOUT=160000000
       - FEIGN_CLIENT_CONFIG_DEFAULT_READTIMEOUT=160000000
       - RIBBON_READTIMEOUT=160000000
       - RIBBON_CONNECTTIMEOUT=160000000
+      - EUREKA_INSTANCE_PREFER-IP-ADDRESS=true
+      - EUREKA_CLIENT_FETCHREGISTRY=true
     deploy:
-      replicas: 0
+      replicas: 1
       restart_policy:
         condition: on-failure
         

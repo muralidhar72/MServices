@@ -57,13 +57,3 @@ http://localhost:8889/limits (ERROR)
 http://localhost:8100/currency-converter-feign/from/EUR/to/INR/quantity/1000 -- Timeout
 http://localhost:8765/currency-conversion-service/currency-converter-feign/from/USD/to/INR/quantity/10 (Zul call .. Conenction refused(
 
-2.4.jar!/:2.2.4]
-
-
-	... 132 common frames omitted
-
-
-Caused by: org.apache.http.conn.HttpHostConnectException: Connect to localhost:8100 [localhost/127.0.0.1] failed: Connection refused (Connection refused)
-
-
-	at org.apache.http.imp
