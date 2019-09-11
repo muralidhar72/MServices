@@ -1,8 +1,14 @@
 version: '3.3'
 
+networks:
+  traefik-net:
+    external: false
+
 services:
   netflix-eureka-naming-server:
     image: pmr2791/pmr2798791:netflix-eureka-naming-server
+    networks:
+      - traefik-net
     ports:
       - "8761:8761"
     environment:
@@ -11,8 +17,15 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+    labels:
+      - "traefik.frontend.rule=Host:netflix-eureka-naming-server"
+      - traefik.port=5000
+      - traefik.enable=true
+      - traefik.docker.network=traefik-net	  
   spring_cloud_server:
     image: pmr2791/pmr2798791:spring_cloud_server
+    networks:
+      - traefik-net
     ports:
       - "8888:8888"
     depends_on:
@@ -30,8 +43,15 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+    labels:
+      - "traefik.frontend.rule=Host:spring_cloud_server"	  
+      - traefik.port=5000
+      - traefik.enable=true
+      - traefik.docker.network=traefik-net	  
   limits-server:
     image: pmr2791/pmr2798791:limits-server
+    networks:
+      - traefik-net
     ports:
       - "8889:8889"
     depends_on:
@@ -46,13 +66,19 @@ services:
       - RIBBON_CONNECTTIMEOUT=160000000
       - EUREKA_INSTANCE_PREFER-IP-ADDRESS=true
       - EUREKA_CLIENT_FETCHREGISTRY=true
-      
     deploy:
       replicas: 1
       restart_policy:
         condition: on-failure
+    labels:
+      - "traefik.frontend.rule=Host:limits-server"	  
+      - traefik.port=5000
+      - traefik.enable=true
+      - traefik.docker.network=traefik-net	  
   netflix-zuul-api-gateway-server:
     image: pmr2791/pmr2798791:netflix-zuul-api-gateway-server
+    networks:
+      - traefik-net
     ports:
       - "8765:8765"
     depends_on:
@@ -70,8 +96,15 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+    labels:
+      - "traefik.frontend.rule=Host:netflix-zuul-api-gateway-server"	  
+      - traefik.port=5000
+      - traefik.enable=true
+      - traefik.docker.network=traefik-net	  
   currency-conversion-service:
     image: pmr2791/pmr2798791:currency-conversion-service
+    networks:
+      - traefik-net
     ports:
       - "8100:8100"
     depends_on:
@@ -89,9 +122,16 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
+    labels:
+      - "traefik.frontend.rule=Host:currency-conversion-service"	  
+      - traefik.port=5000
+      - traefik.enable=true
+      - traefik.docker.network=traefik-net	  
         
   currency-exchange-service:
     image: pmr2791/pmr2798791:currency-exchange-service
+    networks:
+      - traefik-net
     ports:
       - "8001:8001"
     depends_on:
@@ -109,6 +149,8 @@ services:
       replicas: 1
       restart_policy:
         condition: on-failure
-        
-        
-        
+    labels:
+      - "traefik.frontend.rule=Host:currency-exchange-service"	  
+      - traefik.port=5000
+      - traefik.enable=true
+      - traefik.docker.network=traefik-net	  

@@ -49,11 +49,15 @@ docker tag  murali/limits-service:limits-server  pmr2791/pmr2798791:limits-serve
 
 docker push pmr2791/pmr2798791:currency-exchange-service && docker push pmr2791/pmr2798791:netflix-zuul-api-gateway-server && 
 docker push pmr2791/pmr2798791:currency-conversion-service && docker push pmr2791/pmr2798791:limits-server && docker push pmr2791/pmr2798791:spring_cloud_server && docker push pmr2791/pmr2798791:netflix-eureka-naming-server
-
+====
+docker stack deploy --compose-file=microservices.yml MicroServices
+=====
 
 Works
 http://localhost:8001/currency-exchange/from/EUR/to/INR  (WORKS)
 http://localhost:8889/limits (ERROR)
 http://localhost:8100/currency-converter-feign/from/EUR/to/INR/quantity/1000 -- Timeout
 http://localhost:8765/currency-conversion-service/currency-converter-feign/from/USD/to/INR/quantity/10 (Zul call .. Conenction refused(
+
+https://jmkhael.io/traefik-as-a-dynamic-reverse-proxy-for-docker-swarm/
 
